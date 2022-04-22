@@ -22,7 +22,7 @@ module.exports.getMovies = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  Movie.findById(req.params.movieId)
+  Movie.findById(req.params._id)
     .then((movie) => {
       if (!movie) {
         throw new NotFoundError('Фильм с указанным _id не найдена');
@@ -30,7 +30,7 @@ module.exports.deleteMovie = (req, res, next) => {
         throw new ForbiddenError('Это не ваш фильм');
       } else {
         return Movie.deleteOne({
-          id: movie.id,
+          _id: movie._id,
         });
       }
     })
@@ -48,30 +48,30 @@ module.exports.deleteMovie = (req, res, next) => {
 
 module.exports.createMovie = (req, res, next) => {
   const {
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailer,
+    movieId,
     nameRU,
     nameEN,
+    director,
+    country,
+    year,
+    duration,
+    description,
+    trailerLink,
+    image,
     thumbnail,
-    movieId,
   } = req.body;
   Movie.create({
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailer,
+    movieId,
     nameRU,
     nameEN,
+    director,
+    country,
+    year,
+    duration,
+    description,
+    trailerLink,
+    image,
     thumbnail,
-    movieId,
     owner: req.user._id,
   })
     .then((movie) => {

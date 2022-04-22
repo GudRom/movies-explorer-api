@@ -46,14 +46,38 @@ const userInfoValidate = celebrate({
 
 const movieValidate = celebrate({
   [Segments.BODY]: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required(),
+    movieId: Joi.number().required(),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
+    director: Joi.string().required(),
+    country: Joi.string().required(),
+    year: Joi.string().required(),
+    duration: Joi.number().required(),
+    description: Joi.string().required(),
+    trailerLink: Joi.string().required().custom((value, helper) => {
+      if (!validator.isURL(value)) {
+        return helper.error('string.notURL');
+      }
+      return value;
+    }),
+    image: Joi.string().required().custom((value, helper) => {
+      if (!validator.isURL(value)) {
+        return helper.error('string.notURL');
+      }
+      return value;
+    }),
+    thumbnail: Joi.string().required().custom((value, helper) => {
+      if (!validator.isURL(value)) {
+        return helper.error('string.notURL');
+      }
+      return value;
+    }),
   }),
 });
 
 const movieIdValidate = celebrate({
   [Segments.PARAMS]: Joi.object().keys({
-    cardId: Joi.string().required().hex().length(24),
+    _id: Joi.string().required().hex().length(24),
   }),
 });
 

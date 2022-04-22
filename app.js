@@ -25,16 +25,16 @@ app.use('/api/users', require('./routes/users'));
 
 app.use(errorLogger);
 app.use(errors());
-// eslint-disable-next-line no-unused-vars
+
 app.use((req, res, next) => {
   next(new NotFoundError('Не могу найти!'));
 });
-// eslint-disable-next-line no-unused-vars
+
 app.use((err, req, res, next) => {
   console.log(err.stack || err);
   const status = err.statusCode || 500;
-
   res.status(status).send({ message: err.message, err });
+  next();
 });
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

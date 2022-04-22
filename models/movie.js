@@ -1,23 +1,9 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
-const regex = /^https?:\/\/([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/i;
-const regexRU = /[а-я\sё]/i;
-
-function validator(value) {
-  return regex.test(value);
+function validatorU(value) {
+  return validator.isURL(value);
 }
-
-function langValidator(value) {
-  return regexRU.test(value);
-}
-
-const imageSchema = new mongoose.Schema({
-  url: {
-    type: String,
-    required: true,
-    validate: validator,
-  },
-});
 
 const movieSchema = new mongoose.Schema({
   country: {
@@ -33,23 +19,27 @@ const movieSchema = new mongoose.Schema({
     required: true,
   },
   year: {
-    type: Number,
+    type: String,
     required: true,
   },
   description: {
     type: String,
     required: true,
   },
-  image: imageSchema,
+  image: {
+    type: String,
+    required: true,
+    validate: validatorU,
+  },
   trailerLink: {
     type: String,
     required: true,
-    validate: validator,
+    validate: validatorU,
   },
   thumbnail: {
     type: String,
     required: true,
-    validate: validator,
+    validate: validatorU,
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
@@ -59,16 +49,15 @@ const movieSchema = new mongoose.Schema({
   movieId: {
     type: Number,
     required: true,
+    unique: true,
   },
   nameRU: {
     type: String,
     required: true,
-    validate: langValidator,
   },
   nameEN: {
     type: String,
     required: true,
-    validate: langValidator,
   },
 });
 
