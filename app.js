@@ -20,8 +20,8 @@ app.use(requestLogger);
 app.post('/signup', validations.signupValidate, createUser);
 app.post('/signin', validations.signinValidate, login);
 app.use(auth);
-app.use('/api/movies', require('./routes/movies'));
-app.use('/api/users', require('./routes/users'));
+app.use('/movies', require('./routes/movies'));
+app.use('/users', require('./routes/users'));
 
 app.use(errorLogger);
 app.use(errors());
