@@ -9,29 +9,27 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.createUser = (req, res, next) => {
   const { name, email, password } = req.body;
-  User.findOne({ email })
-    .then((user) => {
-      if (user) {
-        throw new ConflictError(`Пользователь с таким email ${user.email} уже существует`);
-      }
-      return bcrypt.hash(password, 10);
-    })
+  bcrypt.hash(password, 10)
     .then((hash) => User.create({
       name,
       email,
       password: hash,
-    }))
-    .then((user) => User.findOne({ email: user.email }))
-    .then((user) => {
-      res.status(200).send(user);
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные'));
-      } else {
-        next(err);
-      }
-    });
+      .then((user) => {
+        const newUser = user.toObject();
+        delete newUser.password;
+        res.status(200).send(newUser);
+      })
+      .catch((err) => {
+        if (err.name === 'ValidationError') {
+          throw new BadRequestError('Переданы некорректные данные');
+        }
+        if (err.code === 11000) {
+          throw new ConflictError('Пользователь с таким email уже существует');
+        }
+        return next(err);
+      }))
+    .catch(next);
 };
 
 module.exports.login = (req, res, next) => {
@@ -57,13 +55,7 @@ module.exports.getUserInfo = (req, res, next) => {
         throw new NotFoundError('Пользователь по указанному _id не найден');
       }
     })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new BadRequestError('Переданы некорректные данные'));
-      } else {
-        next(err);
-      }
-    });
+    .catch(next);
 };
 
 module.exports.updateProfile = (req, res, next) => {
