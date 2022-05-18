@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
+const cors = require('cors');
 
 const app = express();
 const { PORT = 3000 } = process.env;
@@ -13,6 +14,10 @@ const NotFoundError = require('./errors/NotFoundError');
 mongoose.connect(process.env.DB_URL || 'mongodb://localhost:27017/moviesdb');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors({
+  origin: ['https://movies.gudrom.nomoredomains.xyz', 'http://movies.gudrom.nomoredomains.xyz', 'http://localhost:3000'],
+  credentials: true,
+}));
 app.use(requestLogger);
 
 app.use(require('./routes/auth'));
