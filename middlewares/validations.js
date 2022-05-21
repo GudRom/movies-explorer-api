@@ -60,18 +60,8 @@ const movieValidate = celebrate({
       }
       return value;
     }),
-    image: Joi.string().required().custom((value, helper) => {
-      if (!validator.isURL(value)) {
-        return helper.error('string.notURL');
-      }
-      return value;
-    }),
-    thumbnail: Joi.string().required().custom((value, helper) => {
-      if (!validator.isURL(value)) {
-        return helper.error('string.notURL');
-      }
-      return value;
-    }),
+    image: Joi.string().required(),
+    thumbnail: Joi.string().required(),
   }),
 });
 

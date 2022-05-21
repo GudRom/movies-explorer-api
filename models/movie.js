@@ -29,7 +29,6 @@ const movieSchema = new mongoose.Schema({
   image: {
     type: String,
     required: true,
-    validate: validatorU,
   },
   trailerLink: {
     type: String,
@@ -39,7 +38,6 @@ const movieSchema = new mongoose.Schema({
   thumbnail: {
     type: String,
     required: true,
-    validate: validatorU,
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
