@@ -1,13 +1,11 @@
 # Movies Explorer
 
 ## О проекте
-***
 Бэкенд часть приложения Movies Explorer со следующими возможностями: авторизации и регистрации пользователей, операции с фильмами и пользователями.
 
 Это часть дипломной работы по курсу Веб-разработчик в Яндекс.Практикум. Доработки не планируются.
 
 ## Стек
-***
   
 ![javascript](https://user-images.githubusercontent.com/88783602/169494114-6ce33e63-d2f8-45fa-85d4-bca3b784a59e.png)
 ![nodedotjs](https://user-images.githubusercontent.com/88783602/169494149-1f7cecae-4137-4608-8b67-5a86a92046be.png)
@@ -17,7 +15,6 @@
   
   
 ## Ссылки на бэкенд
-***
 https://api.movies.gudrom.nomoredomains.work
 
 http://84.201.176.33
